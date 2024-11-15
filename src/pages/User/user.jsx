@@ -1,11 +1,14 @@
 import Header from "../../components/Header/header";
+import WelcomeHeader from "../../components/WelcomeHeader/welcomeHeader";
 import Footer from "../../components/Footer/footer";
 
 function User(){
     return(
     <>
         <Header />
-        <p>✨Test User✨</p>
+        <main className="main bg-dark">
+            <WelcomeHeader />
+        </main>
         <Footer />
     </>
     )
