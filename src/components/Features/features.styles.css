@@ -34,3 +34,8 @@
     border-radius: 50%;
     padding: 1rem;
 }
+
+.feature-item {
+  flex: 1;
+  padding: 2.5rem;
+}
