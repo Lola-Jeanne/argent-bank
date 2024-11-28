@@ -11,18 +11,18 @@ export default function Features(){
         <section className="features">
             <h2 className="sr-only">Features</h2>
                 <div className="feature-item">
-                    <FeatureTitle propsTitle="You are our #1 priority"/>
                     <FeaturePic propsPic={LogoChat}/>
+                    <FeatureTitle propsTitle="You are our #1 priority"/>
                     <FeatureText propsText="Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes."/>
                 </div>
                 <div className="feature-item">
-                    <FeatureTitle propsTitle="More savings means higher rates"/>
                     <FeaturePic propsPic={LogoMoney}/>
+                    <FeatureTitle propsTitle="More savings means higher rates"/>
                     <FeatureText propsText="The more you save with us, the higher your interest rate will be!"/>
                 </div>
                 <div className="feature-item">
-                    <FeatureTitle propsTitle="Security you can trust"/>
                     <FeaturePic propsPic={LogoSecurity}/>
+                    <FeatureTitle propsTitle="Security you can trust"/>
                     <FeatureText propsText="We use top of the line encryption to make sure your data and money is always safe."/>
                 </div>
         </section>

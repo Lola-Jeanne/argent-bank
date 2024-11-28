@@ -32,6 +32,16 @@
     text-decoration: none;
     margin-right: 0.5rem;
 }
+
+.btn-sign-out{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    font-weight: bold;
+    color: #2c3e50;
+}
   
 .main-nav-item:hover {
     text-decoration: underline;
