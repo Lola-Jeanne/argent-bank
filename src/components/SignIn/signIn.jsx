@@ -2,16 +2,20 @@ import './signIn.styles.css';
 import {useNavigate } from 'react-router-dom';
 import React, {useState} from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login, setError } from '../../Redux/slicer';
 
 export default function SignIn(){
 
     const[username, setUsername] = useState(""); //Pour stocker l'email de l'utilisateur
     const [password, setPassword] = useState(""); //Pour stocker le password
-    const [error, setError] = useState(""); //Pour stocker les erreurs si nécessaire
+    // const [error, setError] = useState(""); //Pour stocker les erreurs si nécessaire
     const navigate = useNavigate(); //Pour la redirection après la connexion
+    const dispatch = useDispatch();
 
     const handleSignIn = async (e) =>{
         e.preventDefault();
+        console.log("test connexion");
 
         try { 
             const response = await axios.post("http://localhost:3001/api/v1/user/login", {
@@ -19,23 +23,17 @@ export default function SignIn(){
                 password: password,
             });
 
+            console.log("Réponse API: ", response.data);
             const token = response.data.body.token; 
-            console.log('Token récupéré :', token);
+            dispatch(login(token)); //Pour stocker le token dans redux
+            console.log("Token stocké; ", token);
+            navigate('/user');
 
-            //Local storage
-            localStorage.setItem("authToken", token);
-            navigate("/user");
-
-            navigate("/user")
-        
         } catch (err) {
-            if (err.response) {
-                setError(err.response.data.message || "Erreur lors de la connexion");
-            } else {
-                setError("Erreur connexion au serveur");
-            }
+            const error = err.response?.data?.message || 'Erreur lors de la connexion';
+            dispatch(setError(error)); 
         }
-    }
+    };
 
     return(
         <>
@@ -57,10 +55,8 @@ export default function SignIn(){
                         <input type="checkbox" id="remember-me" />
                         <label htmlFor="remember-me">Remember me</label>
                 </div>
-                {/* <Link className="sign-in-button" to="/user">Sign In</Link> */}
-                <button type='submit' className="sign-in-button" to="/user">Sign In</button>
+                <button type='submit' className="sign-in-button">Sign In</button>
                 </form>
-                {error && <p>{error}</p>}
             </section>
         </main>
     </>

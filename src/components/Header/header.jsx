@@ -1,22 +1,17 @@
-import { useEffect, useState } from 'react';
 import logo from '../../assets/argentBankLogo.png';
 import './header.styles.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../Redux/slicer';
 
 export default function Header(){
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false); //Local state pour suivre la connexion
+    const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem("authToken"); //Vérifier si le token est dans le local storage
-        setIsLoggedIn(!!token);
-    }, []);
-
-    const handleLogout = () =>{
-        localStorage.removeItem("authToken");
-        setIsLoggedIn(false);
-        navigate("/");
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/');
     }
 
     return(

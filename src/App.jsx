@@ -3,21 +3,15 @@ import './App.css';
 import Home from './pages/Home/index';
 import SignIn from './pages/Sign-In/sign-in';
 import User from './pages/User/user';
+import { Provider, useSelector } from 'react-redux';
+import store from './Redux/store';
 
 function App() {
-
-  // const isAuthenticated = () => {
-  //   return !!localStorage.getItem("authToken");
-  // }
-
-  // const ProtectedRoute = ({children}) =>{
-  //   return isAuthenticated() ? children : <Navigate to={"/sign-in"} />;
-  // };
  
   const ProtectedRoute = ({children}) => {
-    const token = localStorage.getItem("authToken"); //Vérification du token
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); //Vérification du token dans le slicer
 
-    if(!token) {
+    if(!isAuthenticated) {
       return <Navigate to="/sign-in" />;
     }
 
@@ -25,14 +19,16 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={< Home />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/user" 
-        element={<ProtectedRoute><User /></ProtectedRoute>} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store} >
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={< Home />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/user" 
+          element={<ProtectedRoute><User /></ProtectedRoute>} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
