@@ -3,8 +3,44 @@ import WelcomeHeader from "../../components/WelcomeHeader/welcomeHeader";
 import Footer from "../../components/Footer/footer";
 import Account from "../../components/Account/account";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function User(){
+
+    const [userData, setUserData] = useState(null); //Pour stocker les données utilisateur
+    const [error, setError] = useState(null);
+    const token = useSelector((state) => state.auth.token);  // Récupérer le token depuis redux
+
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                console.log("fonction fetchUserData")
+                if (!token) {
+                    setError("Utilisateur non connecté");
+                    return;
+                }
+                console.log("Envoie de la requête<")
+                const response = await axios.get("http://localhost:3001/api/v1/user/profile",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+                console.log("Données utilisateur récupérées :", response.data.body);
+                setUserData(response.data.body);
+            } catch (err) {
+                console.error("Erreur lors de l'appel de l'API :", err);
+                setError("Une erreur s'est produite lors de la récupération des données utilisateur.");
+            }
+        };
+
+        fetchUserData(); 
+    }, [token]);
+
     return(
     <>
         <Header>
