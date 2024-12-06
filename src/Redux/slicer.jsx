@@ -38,8 +38,14 @@ const authSlice = createSlice({
             state.data = null;
             state.error = action.payload
         },
+
+        updateUserName: (state, action) => {
+            if (state.user) {
+                state.user.userName = action.payload; //Pour mettre à jour le nom d'utilisateur
+            }
+        }
     },
 });
 
-export const {login, logout, setError, fetchUserRequest, fetchUserSuccess, fetchUserFailure} = authSlice.actions;
+export const {login, logout, setError, fetchUserRequest, fetchUserSuccess, fetchUserFailure, updateUserName} = authSlice.actions;
 export default authSlice.reducer;

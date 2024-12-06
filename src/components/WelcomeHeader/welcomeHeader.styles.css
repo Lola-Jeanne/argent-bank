@@ -10,3 +10,22 @@
     font-weight: bold;
     padding: 10px;
 }
+
+.champs-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    height: 30px;
+    align-items: center;
+}
+
+.btn-form-container {
+    display: flex;
+    margin-top: 15px;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-form {
+    width: 100px;
+}

@@ -1,3 +1,4 @@
+import './user.styles.css';
 import Header from "../../components/Header/header";
 import WelcomeHeader from "../../components/WelcomeHeader/welcomeHeader";
 import Footer from "../../components/Footer/footer";
