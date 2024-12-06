@@ -5,24 +5,26 @@ import Account from "../../components/Account/account";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserFailure, fetchUserRequest, fetchUserSuccess } from "../../Redux/slicer";
 
 function User(){
 
     const [userData, setUserData] = useState(null); //Pour stocker les données utilisateur
     const [error, setError] = useState(null);
     const token = useSelector((state) => state.auth.token);  // Récupérer le token depuis redux
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                console.log("fonction fetchUserData")
                 if (!token) {
-                    setError("Utilisateur non connecté");
+                    dispatch(fetchUserFailure("Utilisateur non connecté"));
                     return;
                 }
-                console.log("Envoie de la requête<")
+
+                dispatch(fetchUserRequest());
                 const response = await axios.get("http://localhost:3001/api/v1/user/profile",
                     {
                         headers: {
@@ -31,15 +33,17 @@ function User(){
                     }
                 );
                 console.log("Données utilisateur récupérées :", response.data.body);
-                setUserData(response.data.body);
+                dispatch(fetchUserSuccess(response.data.body)) //Pour stocker les données utilisateurs dans Rédux
+                // setUserData(response.data.body);
             } catch (err) {
                 console.error("Erreur lors de l'appel de l'API :", err);
-                setError("Une erreur s'est produite lors de la récupération des données utilisateur.");
+                // setError("Une erreur s'est produite lors de la récupération des données utilisateur.");
+                dispatch(fetchUserFailure("Une erreur s'est produite lors de la récupération des données utilisateur."))
             }
         };
 
         fetchUserData(); 
-    }, [token]);
+    }, [token, dispatch]);
 
     return(
     <>

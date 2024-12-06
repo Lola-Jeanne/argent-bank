@@ -33,6 +33,10 @@
     margin-right: 0.5rem;
 }
 
+.navigation-container {
+    display: flex;
+}
+
 .btn-sign-out{
     display: flex;
     align-items: center;
