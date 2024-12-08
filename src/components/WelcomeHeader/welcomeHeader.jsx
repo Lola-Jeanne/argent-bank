@@ -2,9 +2,11 @@ import { useState } from 'react';
 import './welcomeHeader.styles.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserName } from '../../Redux/slicer';
+import axios from 'axios';
 
 export default function WelcomeHeader(){
     const user = useSelector((state) => state.auth.user);
+    const token = useSelector((state) => state.auth.token);
     const userName = user?.userName || "User";
     const firstName = user?.firstName || "First Name";
     const LastName = user?.LastName || "Last Name";
@@ -16,10 +18,32 @@ export default function WelcomeHeader(){
     const handleEditClick = () => {
         setIsEditing(true); //Pour afficher le form
     };
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateUserName(newUserName));
-        setIsEditing(false);
+        // dispatch(updateUserName(newUserName));
+        // setIsEditing(false);
+        try {
+            const response = await axios.put('http://localhost:3001/api/v1/user/profile', {
+                id: user?.id,
+                userName: newUserName,
+            }, 
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+            if (response.status === 200) {
+                dispatch(updateUserName(newUserName)); //Pour mettre à jour dans Redux
+                setIsEditing(false);
+            } else {
+                console.error('Erreur lors de la modification du user name: ', response);
+            }
+        } catch (error) {
+            console.error('Internal Server Error', error);
+        }
+    
     };
     const handleCancel = () => {
         setNewUserName(userName);
