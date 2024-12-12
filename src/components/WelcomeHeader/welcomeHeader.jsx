@@ -20,8 +20,7 @@ export default function WelcomeHeader(){
     };
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        // dispatch(updateUserName(newUserName));
-        // setIsEditing(false);
+
         try {
             const response = await axios.put('http://localhost:3001/api/v1/user/profile', {
                 id: user?.id,

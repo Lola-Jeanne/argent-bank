@@ -35,10 +35,9 @@ function User(){
                 );
                 console.log("Données utilisateur récupérées :", response.data.body);
                 dispatch(fetchUserSuccess(response.data.body)) //Pour stocker les données utilisateurs dans Rédux
-                // setUserData(response.data.body);
+
             } catch (err) {
                 console.error("Erreur lors de l'appel de l'API :", err);
-                // setError("Une erreur s'est produite lors de la récupération des données utilisateur.");
                 dispatch(fetchUserFailure("Une erreur s'est produite lors de la récupération des données utilisateur."))
             }
         };
