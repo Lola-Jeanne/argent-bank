@@ -9,7 +9,7 @@ export default function WelcomeHeader(){
     const token = useSelector((state) => state.auth.token);
     const userName = user?.userName || "User";
     const firstName = user?.firstName || "First Name";
-    const LastName = user?.LastName || "Last Name";
+    const lastName = user?.lastName || "Last Name";
 
     const [isEditing, setIsEditing] = useState(false); //Pour gérer l'affichage du form
     const [newUserName, setNewUserName] = useState(userName); //Pour le nouveau nom d'utilisateur
@@ -65,7 +65,7 @@ export default function WelcomeHeader(){
                         </div>
                         <div className='champs-form'>
                             <p>Last name:</p>
-                            <input type='text' value={LastName} disabled></input>
+                            <input type='text' value={lastName} disabled></input>
                         </div>
                         <div className='btn-form-container'>
                             <button className='edit-button btn-form' type='submit'>Save</button>
