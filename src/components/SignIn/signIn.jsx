@@ -11,6 +11,7 @@ export default function SignIn(){
     const [password, setPassword] = useState(""); //Pour stocker le password
     const navigate = useNavigate(); //Pour la redirection après la connexion
     const dispatch = useDispatch();
+    const [error, setError] = useState("");
 
     const handleSignIn = async (e) =>{
         e.preventDefault();
@@ -26,17 +27,18 @@ export default function SignIn(){
             const token = response.data.body.token; 
             dispatch(login(token)); //Pour stocker le token dans redux
             console.log("Token stocké; ", token);
+            setError("");
             navigate('/user');
 
         } catch (err) {
             const error = err.response?.data?.message || 'Erreur lors de la connexion';
-            dispatch(setError(error)); 
+            setError(error); 
         }
     };
 
     return(
         <>
-        <main className="main bg-dark">
+        <main className="main bg-dark sign-in-height">
             <section className="sign-in-content">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/></svg>
                 <h1>Sign In</h1>
@@ -52,6 +54,9 @@ export default function SignIn(){
                     <div className="input-remember">
                         <input type="checkbox" id="remember-me" />
                         <label htmlFor="remember-me">Remember me</label>
+                </div>
+                <div>
+                    {error && <p className="error-message">{error}</p>}
                 </div>
                 <button type='submit' className="sign-in-button">Sign In</button>
                 </form>
